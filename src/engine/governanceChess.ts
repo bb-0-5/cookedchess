@@ -11,12 +11,12 @@ export const PIECE_VALUES: Record<PieceSymbol, number> = {
 };
 
 export const BASE_PROFILES: Record<PieceSymbol, [number, number, number]> = {
-  p: [1.15, 0.75, 1.25], // survival, material, activity
-  n: [0.95, 1.00, 1.25],
-  b: [0.95, 1.10, 1.10],
-  r: [1.10, 1.25, 0.85],
-  q: [1.30, 1.50, 1.10],
-  k: [1.80, 0.75, 0.40]
+  p: [0.50, 1.00, 2.00], // Pawns: low survival, normal material, high activity (marching)
+  n: [0.20, 1.00, 2.50], // Knights: extremely aggressive, low survival
+  b: [0.90, 1.20, 1.50], // Bishops: standard attackers
+  r: [1.80, 1.50, 0.50], // Rooks: highly defensive/survival-focused until end-game
+  q: [1.10, 2.00, 1.50], // Queens: balanced but heavily values material
+  k: [3.00, 0.10, 0.10]  // Kings: extremely timid and defensive
 };
 
 // Seeded simple pseudo-random number generator for reproducible personalities
@@ -29,14 +29,27 @@ function createRng(seed: number) {
   };
 }
 
-export function makeAgents(board: Chess, seed: number = 42): {
+export function makeAgents(board: Chess, seed: number = 42, useMemory: boolean = true): {
   agents: Record<string, Agent8>;
-  positions: Record<string, string>; // square (e.g. 'e2') -> agentId
+  positions: Record<string, string>;
 } {
   const rng = createRng(seed + 91117);
   const counters: Record<string, number> = {};
   const agents: Record<string, Agent8> = {};
   const positions: Record<string, string> = {};
+
+  // Try to load persisted agents
+  let savedAgents: Record<string, Agent8> | null = null;
+  if (useMemory && typeof window !== 'undefined') {
+    try {
+      const stored = localStorage.getItem('consensus-chess-agents');
+      if (stored) {
+        savedAgents = JSON.parse(stored);
+      }
+    } catch (e) {
+      console.warn('Failed to load agents from local storage', e);
+    }
+  }
 
   const squares: Square[] = [
     'a1', 'b1', 'c1', 'd1', 'e1', 'f1', 'g1', 'h1',
@@ -55,23 +68,31 @@ export function makeAgents(board: Chess, seed: number = 42): {
     counters[key] = (counters[key] || 0) + 1;
     const agentId = `${key}${counters[key]}`;
 
-    const profile = BASE_PROFILES[piece.type];
-    const jitter = (val: number) => {
-      const u = 0.86 + rng() * (1.14 - 0.86);
-      return Math.round(val * u * 1000) / 1000;
-    };
+    if (savedAgents && savedAgents[agentId]) {
+      // Restore the agent's learned traits and memory, but reset currentPiece to startPiece just in case
+      agents[agentId] = {
+        ...savedAgents[agentId],
+        currentPiece: piece.type
+      };
+    } else {
+      const profile = BASE_PROFILES[piece.type];
+      const jitter = (val: number) => {
+        const u = 0.86 + rng() * (1.14 - 0.86);
+        return Math.round(val * u * 1000) / 1000;
+      };
 
-    agents[agentId] = {
-      agentId,
-      color: piece.color,
-      startPiece: piece.type,
-      currentPiece: piece.type,
-      survival: jitter(profile[0]),
-      material: jitter(profile[1]),
-      activity: jitter(profile[2]),
-      trust: 0.5,
-      voteWeight: 1.0
-    };
+      agents[agentId] = {
+        agentId,
+        color: piece.color,
+        startPiece: piece.type,
+        currentPiece: piece.type,
+        survival: jitter(profile[0]),
+        material: jitter(profile[1]),
+        activity: jitter(profile[2]),
+        trust: 0.5,
+        voteWeight: 1.0
+      };
+    }
 
     positions[sq] = agentId;
   }
@@ -155,25 +176,91 @@ export function agentUtility(
   move: Move,
   voterSquare: Square,
   voter: Agent8,
-  positions: Record<string, string>
+  positions: Record<string, string>,
+  government: GovernmentType
 ): number {
   const moverId = positions[move.from];
   const movingPiece = board.get(move.from);
   const capturedPiece = move.captured ? { type: move.captured, color: (voter.color === 'w' ? 'b' : 'w') as Color } : null;
 
-  let score = 0.0;
-  if (capturedPiece) {
-    score += PIECE_VALUES[capturedPiece.type] * voter.material;
+  // Apply government-specific modifiers to the voter's personality
+  let effMaterial = voter.material;
+  let effSurvival = voter.survival;
+  let effActivity = voter.activity;
+
+  switch (government) {
+    case 'dictatorship':
+      // Dictatorship suppresses individual aggression and promotes extreme caution (survival)
+      effSurvival *= 2.5;
+      effActivity *= 0.4;
+      break;
+    case 'monarchy':
+      // Monarchy promotes noble sacrifice and aggression over material wealth
+      effActivity *= 1.5;
+      effMaterial *= 0.5;
+      break;
+    case 'utilitarian':
+      // Utilitarianism values collective material gains over individual survival
+      effMaterial *= 2.0;
+      effSurvival *= 0.2;
+      break;
+    case 'reputation':
+      // Reputation system promotes highly balanced, analytical play
+      effMaterial *= 1.2;
+      effSurvival *= 1.2;
+      effActivity *= 0.8;
+      break;
+    case 'democracy':
+    default:
+      // Democracy keeps individual natural traits intact
+      break;
   }
 
+  let score = 0.0;
+  if (capturedPiece) {
+    score += PIECE_VALUES[capturedPiece.type] * effMaterial;
+  }
+
+  // Anti-repetition: sequence and frequency-based penalties
+  const history = board.history({ verbose: true });
+  let repetitionPenalty = 0;
+  
+  const recentHistory = history.slice(-40); // Look at up to the last 20 moves per side
+  for (let i = 0; i < recentHistory.length; i++) {
+    const pastMove = recentHistory[i];
+    if (pastMove.color === move.color) {
+      // Penalize moving back to the square we came from
+      if (pastMove.from === move.to && pastMove.to === move.from) {
+        // The more recently it happened, the worse it is.
+        const distance = recentHistory.length - i;
+        repetitionPenalty -= (15.0 / distance);
+      }
+      // Penalize repeating the exact same move sequence
+      if (pastMove.from === move.from && pastMove.to === move.to) {
+        const distance = recentHistory.length - i;
+        repetitionPenalty -= (10.0 / distance);
+      }
+    }
+  }
+
+  // Massively penalize if this move strictly triggers a threefold repetition draw
+  if (afterBoard.isThreefoldRepetition()) {
+    repetitionPenalty -= 100.0;
+  }
+
+  score += repetitionPenalty;
+
+  // Add small randomness to break absolute deadlocks
+  score += (Math.random() - 0.5) * 0.05;
+
   if (moverId === voter.agentId) {
-    score += 1.4 * voter.activity;
+    score += 1.4 * effActivity;
     if (movingPiece && movingPiece.type === 'p') {
       const fromRank = parseInt(move.from[1], 10);
       const toRank = parseInt(move.to[1], 10);
       let advance = toRank - fromRank;
       if (voter.color === 'b') advance *= -1;
-      score += Math.max(0, advance) * 0.35 * voter.activity;
+      score += Math.max(0, advance) * 0.35 * effActivity;
     }
   }
 
@@ -182,11 +269,11 @@ export function agentUtility(
   const opponentColor: Color = voter.color === 'w' ? 'b' : 'w';
 
   if (personalPiece && isSquareAttackedBy(afterBoard, personalSquare, opponentColor)) {
-    score -= PIECE_VALUES[personalPiece.type] * 0.28 * voter.survival;
+    score -= PIECE_VALUES[personalPiece.type] * 0.28 * effSurvival;
   }
 
   if (afterBoard.turn() !== voter.color && afterBoard.inCheck()) {
-    score += 0.5 * voter.activity;
+    score += 0.5 * effActivity;
   }
 
   return Math.round(score * 100000) / 100000;
@@ -234,7 +321,7 @@ export function conductVote8(
 
     for (const move of moves) {
       const uci = `${move.from}${move.to}${move.promotion || ''}`;
-      const util = agentUtility(board, afters[uci], move, square, agent, positions);
+      const util = agentUtility(board, afters[uci], move, square, agent, positions, government);
       row[uci] = util;
 
       if (util > bestUtil || (util === bestUtil && uci.localeCompare(bestUci) > 0)) {
@@ -307,8 +394,8 @@ export function conductVote8(
     selectedMove = moves.reduce((best, m) => {
       const uci = `${m.from}${m.to}${m.promotion || ''}`;
       const bestUci = `${best.from}${best.to}${best.promotion || ''}`;
-      const mWeight = (rawSupport[uci] || 0) + (uci === kingChoiceUci ? 4 : 0);
-      const bWeight = (rawSupport[bestUci] || 0) + (bestUci === kingChoiceUci ? 4 : 0);
+      const mWeight = (rawSupport[uci] || 0) + (uci === kingChoiceUci ? 10 : 0);
+      const bWeight = (rawSupport[bestUci] || 0) + (bestUci === kingChoiceUci ? 10 : 0);
       if (mWeight !== bWeight) return mWeight > bWeight ? m : best;
       const uDiff = (totalUtility[uci] || 0) - (totalUtility[bestUci] || 0);
       if (Math.abs(uDiff) > 0.0001) return uDiff > 0 ? m : best;
@@ -370,7 +457,7 @@ export function conductVote8(
     .filter(v => ballots[v.agent.agentId] === selectedUci)
     .map(v => `${v.agent.agentId}@${v.square}`);
 
-  const sideName = color === 'w' ? 'White' : 'Black';
+  const sideName = color === 'w' ? 'Cyan' : 'Magenta';
   const govName = government.toUpperCase();
   const bulletin = `[8×8 ${govName}] ${sideName} selects ${selectedMove.san} (${selectedUci}) with ${rawSupport[selectedUci]} direct votes (utility: ${totalUtility[selectedUci]}). Supported by: ${supporters.slice(0, 8).join(', ')}${supporters.length > 8 ? ` +${supporters.length - 8} more` : ''}`;
 

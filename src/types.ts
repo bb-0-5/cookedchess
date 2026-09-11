@@ -73,7 +73,7 @@ export interface VoteData8 {
 export interface HansardLogItem {
   id: string;
   turnNumber: number;
-  side: 'White' | 'Black';
+  side: 'Cyan' | 'Magenta';
   mode: '5x5' | '8x8';
   government?: GovernmentType;
   moveNotation: string;

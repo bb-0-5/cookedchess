@@ -4,7 +4,7 @@ import { squareName } from '../engine/fiveByFive';
 
 interface ParliamentChamberProps {
   mode: '5x5' | '8x8';
-  activeTurn: 'White' | 'Black';
+  activeTurn: 'Cyan' | 'Magenta';
   // 5x5 data:
   voteData5: VoteData5 | null;
   // 8x8 data:
@@ -25,11 +25,11 @@ export const ParliamentChamber: React.FC<ParliamentChamberProps> = ({
   whiteGov,
   blackGov
 }) => {
-  const [selectedSide, setSelectedSide] = useState<'White' | 'Black'>('White');
+  const [selectedSide, setSelectedSide] = useState<'Cyan' | 'Magenta'>('Cyan');
 
   const currentSide = selectedSide;
   const isTurn = currentSide === activeTurn;
-  const currentGov = currentSide === 'White' ? whiteGov : blackGov;
+  const currentGov = currentSide === 'Cyan' ? whiteGov : blackGov;
 
   return (
     <div className="bg-neutral-800 border border-neutral-700 rounded-xl p-4 flex flex-col h-full shadow-lg">
@@ -63,26 +63,26 @@ export const ParliamentChamber: React.FC<ParliamentChamberProps> = ({
           <button
             id="tab-white-parliament"
             type="button"
-            onClick={() => setSelectedSide('White')}
+            onClick={() => setSelectedSide('Cyan')}
             className={`px-2.5 py-1 text-xs font-medium rounded-md transition-all ${
-              selectedSide === 'White'
+              selectedSide === 'Cyan'
                 ? 'bg-neutral-200 text-neutral-900 shadow-sm'
                 : 'text-neutral-400 hover:text-neutral-200'
             }`}
           >
-            White
+            Cyan
           </button>
           <button
             id="tab-black-parliament"
             type="button"
-            onClick={() => setSelectedSide('Black')}
+            onClick={() => setSelectedSide('Magenta')}
             className={`px-2.5 py-1 text-xs font-medium rounded-md transition-all ${
-              selectedSide === 'Black'
+              selectedSide === 'Magenta'
                 ? 'bg-neutral-700 text-white shadow-sm'
                 : 'text-neutral-400 hover:text-neutral-200'
             }`}
           >
-            Black
+            Magenta
           </button>
         </div>
       </div>
@@ -141,7 +141,7 @@ export const ParliamentChamber: React.FC<ParliamentChamberProps> = ({
           <div className="space-y-2">
             {Object.entries(positions8)
               .map(([sq, agentId]) => ({ sq, agent: agents8[agentId] }))
-              .filter(({ agent }) => agent && agent.color === (currentSide === 'White' ? 'w' : 'b'))
+              .filter(({ agent }) => agent && agent.color === (currentSide === 'Cyan' ? 'w' : 'b'))
               .sort((a, b) => {
                 const ranks = { k: 6, q: 5, r: 4, b: 3, n: 2, p: 1 };
                 return (ranks[b.agent.currentPiece] || 0) - (ranks[a.agent.currentPiece] || 0);

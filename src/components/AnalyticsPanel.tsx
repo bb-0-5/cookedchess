@@ -18,8 +18,8 @@ export const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({
 }) => {
   // Aggregate stats from history
   const totalMoves = history.length;
-  const whiteMoves = history.filter(h => h.side === 'White').length;
-  const blackMoves = history.filter(h => h.side === 'Black').length;
+  const whiteMoves = history.filter(h => h.side === 'Cyan').length;
+  const blackMoves = history.filter(h => h.side === 'Magenta').length;
 
   // Compute average consensus margin
   const avgConsensusPct = totalMoves > 0
@@ -27,10 +27,10 @@ export const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({
     : 0;
 
   const agentList = Object.values(agents8);
-  const avgTrustWhite = agentList.filter(a => a.color === 'w').length > 0
+  const avgTrustCyan = agentList.filter(a => a.color === 'w').length > 0
     ? Math.round((agentList.filter(a => a.color === 'w').reduce((acc, a) => acc + a.trust, 0) / agentList.filter(a => a.color === 'w').length) * 100) / 100
     : 0.5;
-  const avgTrustBlack = agentList.filter(a => a.color === 'b').length > 0
+  const avgTrustMagenta = agentList.filter(a => a.color === 'b').length > 0
     ? Math.round((agentList.filter(a => a.color === 'b').reduce((acc, a) => acc + a.trust, 0) / agentList.filter(a => a.color === 'b').length) * 100) / 100
     : 0.5;
 
@@ -60,15 +60,15 @@ export const AnalyticsPanel: React.FC<AnalyticsPanelProps> = ({
         </div>
 
         <div className="bg-neutral-900/80 p-2.5 rounded-lg border border-neutral-700/50">
-          <div className="text-[10px] text-neutral-400 uppercase font-medium">White Avg Trust</div>
-          <div className="text-lg font-bold font-mono text-amber-400 mt-0.5">{avgTrustWhite}</div>
-          <div className="text-[10px] text-neutral-500">Weight: ~{(0.5 + avgTrustWhite).toFixed(2)}x</div>
+          <div className="text-[10px] text-neutral-400 uppercase font-medium">Cyan Avg Trust</div>
+          <div className="text-lg font-bold font-mono text-amber-400 mt-0.5">{avgTrustCyan}</div>
+          <div className="text-[10px] text-neutral-500">Weight: ~{(0.5 + avgTrustCyan).toFixed(2)}x</div>
         </div>
 
         <div className="bg-neutral-900/80 p-2.5 rounded-lg border border-neutral-700/50">
-          <div className="text-[10px] text-neutral-400 uppercase font-medium">Black Avg Trust</div>
-          <div className="text-lg font-bold font-mono text-amber-400 mt-0.5">{avgTrustBlack}</div>
-          <div className="text-[10px] text-neutral-500">Weight: ~{(0.5 + avgTrustBlack).toFixed(2)}x</div>
+          <div className="text-[10px] text-neutral-400 uppercase font-medium">Magenta Avg Trust</div>
+          <div className="text-lg font-bold font-mono text-amber-400 mt-0.5">{avgTrustMagenta}</div>
+          <div className="text-[10px] text-neutral-500">Weight: ~{(0.5 + avgTrustMagenta).toFixed(2)}x</div>
         </div>
       </div>
 

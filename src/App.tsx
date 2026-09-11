@@ -23,8 +23,8 @@ export const App: React.FC = () => {
   const [positions8, setPositions8] = useState(() => makeAgents(new Chess(), 42).positions);
   const [lastMove8, setLastMove8] = useState<{ from: string; to: string } | null>(null);
   const [voteData8, setVoteData8] = useState<VoteData8 | null>(null);
-  const [whiteGov, setWhiteGov] = useState<GovernmentType>('democracy');
-  const [blackGov, setBlackGov] = useState<GovernmentType>('dictatorship');
+  const [whiteGov, setCyanGov] = useState<GovernmentType>('democracy');
+  const [blackGov, setMagentaGov] = useState<GovernmentType>('dictatorship');
 
   // Interactive Board Selection
   const [selectedSquare, setSelectedSquare] = useState<string | null>(null);
@@ -49,14 +49,14 @@ export const App: React.FC = () => {
   const gameResult = mode === '5x5'
     ? board5.result()
     : chess8.isCheckmate()
-      ? `${chess8.turn() === 'w' ? 'Black' : 'White'} wins by checkmate!`
+      ? `${chess8.turn() === 'w' ? 'Magenta' : 'Cyan'} wins by checkmate!`
       : chess8.isDraw()
         ? 'Draw declared (stalemate, repetition, or insufficient material).'
         : '';
 
-  const activeTurnName: 'White' | 'Black' = mode === '5x5'
-    ? (board5.turn === 'W' ? 'White' : 'Black')
-    : (chess8.turn() === 'w' ? 'White' : 'Black');
+  const activeTurnName: 'Cyan' | 'Magenta' = mode === '5x5'
+    ? (board5.turn === 'W' ? 'Cyan' : 'Magenta')
+    : (chess8.turn() === 'w' ? 'Cyan' : 'Magenta');
 
   // Reset function
   const handleReset = useCallback(() => {
@@ -108,7 +108,7 @@ export const App: React.FC = () => {
       setPositions8(positions);
       setLastMove8(null);
       setVoteData8(null);
-      setBulletin('Switched to 8×8 Governance Tournament. Select constitutions for White and Black.');
+      setBulletin('Switched to 8×8 Governance Tournament. Select constitutions for Cyan and Magenta.');
     }
   };
 
@@ -141,7 +141,7 @@ export const App: React.FC = () => {
       }
       setSupportersMap(supMap);
 
-      const sideName = board5.turn === 'W' ? 'White' : 'Black';
+      const sideName = board5.turn === 'W' ? 'Cyan' : 'Magenta';
       const winnerNotation = vote.winner.notation;
       const votersCount = vote.voters.length;
       const winningVotes = vote.totals[winnerNotation] || 0;
@@ -191,7 +191,7 @@ export const App: React.FC = () => {
       }
       setSupportersMap(supMap);
 
-      const sideName = chess8.turn() === 'w' ? 'White' : 'Black';
+      const sideName = chess8.turn() === 'w' ? 'Cyan' : 'Magenta';
       const moveUci = vote.selectedMoveUci;
       const fromSq = moveUci.slice(0, 2);
       const toSq = moveUci.slice(2, 4);
@@ -208,6 +208,13 @@ export const App: React.FC = () => {
         setChess8(newChess);
         setPositions8(newPositions);
         setLastMove8({ from: fromSq, to: toSq });
+
+        // Persist the mutated agents8 back to localStorage to remember learned trust/weights
+        try {
+          localStorage.setItem('consensus-chess-agents', JSON.stringify(agents8));
+        } catch (e) {
+          console.warn('Failed to save agents to local storage', e);
+        }
 
         // Add to history
         setHistory(prev => [
@@ -330,7 +337,7 @@ export const App: React.FC = () => {
               <div className="flex items-center gap-2">
                 <span
                   className={`w-3 h-3 rounded-full ${
-                    activeTurnName === 'White' ? 'bg-amber-100 ring-2 ring-amber-300' : 'bg-neutral-950 ring-2 ring-neutral-600'
+                    activeTurnName === 'Cyan' ? 'bg-amber-100 ring-2 ring-amber-300' : 'bg-neutral-950 ring-2 ring-neutral-600'
                   }`}
                 />
                 <span className="text-sm font-bold text-neutral-200">
@@ -338,7 +345,7 @@ export const App: React.FC = () => {
                 </span>
                 {mode === '8x8' && (
                   <span className="text-xs text-neutral-400 font-mono">
-                    ({activeTurnName === 'White' ? whiteGov : blackGov})
+                    ({activeTurnName === 'Cyan' ? whiteGov : blackGov})
                   </span>
                 )}
               </div>
@@ -383,8 +390,8 @@ export const App: React.FC = () => {
             isGameOver={isGameOver}
             whiteGov={whiteGov}
             blackGov={blackGov}
-            onWhiteGovChange={setWhiteGov}
-            onBlackGovChange={setBlackGov}
+            onCyanGovChange={setCyanGov}
+            onMagentaGovChange={setMagentaGov}
             activeTurn={activeTurnName}
           />
 

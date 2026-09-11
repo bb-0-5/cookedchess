@@ -70,7 +70,23 @@ export class Board5 {
     return result;
   }
 
-  destinations(origin: [number, number], piece: Piece5): [number, number][] {
+  isAttacked(row: number, col: number, attackerSide: Side): boolean {
+    for (const { square, piece } of this.pieces(attackerSide)) {
+      const dests = this.destinations(square, piece, true); // pseudo-only
+      for (const dest of dests) {
+        if (dest[0] === row && dest[1] === col) return true;
+      }
+    }
+    return false;
+  }
+
+  isInCheck(side: Side): boolean {
+    const kingInfo = this.pieces(side).find(p => p.piece.kind === 'K');
+    if (!kingInfo) return true;
+    return this.isAttacked(kingInfo.square[0], kingInfo.square[1], side === 'W' ? 'B' : 'W');
+  }
+
+  destinations(origin: [number, number], piece: Piece5, pseudoOnly: boolean = false): [number, number][] {
     const [row, col] = origin;
     const moves: [number, number][] = [];
 
@@ -143,13 +159,21 @@ export class Board5 {
       slide([...straight, ...diagonal]);
     }
 
+    if (!pseudoOnly) {
+      return moves.filter(dest => {
+        const b = this.clone();
+        b.push({ origin: origin, destination: dest, notation: '' });
+        b.turn = this.turn;
+        return !b.isInCheck(piece.side);
+      });
+    }
     return moves;
   }
 
   legalMoves(side: Side = this.turn): Move5[] {
     const list: Move5[] = [];
     for (const { square, piece } of this.pieces(side)) {
-      const dests = this.destinations(square, piece);
+      const dests = this.destinations(square, piece, false);
       for (const dest of dests) {
         list.push({
           origin: square,
@@ -186,10 +210,10 @@ export class Board5 {
   }
 
   result(): string {
-    const whiteKing = this.pieces('W').some(p => p.piece.kind === 'K');
-    const blackKing = this.pieces('B').some(p => p.piece.kind === 'K');
-    if (!whiteKing) return 'Black wins by capturing the White King.';
-    if (!blackKing) return 'White wins by capturing the Black King.';
+    const cyanKing = this.pieces('W').some(p => p.piece.kind === 'K');
+    const magentaKing = this.pieces('B').some(p => p.piece.kind === 'K');
+    if (!cyanKing) return 'Magenta wins by capturing the Cyan King.';
+    if (!magentaKing) return 'Cyan wins by capturing the Magenta King.';
     return 'Stalemate — No legal moves available.';
   }
 }
@@ -212,6 +236,22 @@ export function preferenceScore(
   if (voterSquare[0] === move.origin[0] && voterSquare[1] === move.origin[1]) {
     score += 4; // personal agency
   }
+
+  // Anti-repetition: if returning to immediate previous square
+  if (board.history.length >= 2) {
+    const lastMyMove = board.history[board.history.length - 2].move;
+    if (
+      lastMyMove.origin[0] === move.destination[0] &&
+      lastMyMove.origin[1] === move.destination[1] &&
+      lastMyMove.destination[0] === move.origin[0] &&
+      lastMyMove.destination[1] === move.origin[1]
+    ) {
+      score -= 10;
+    }
+  }
+
+  // Break absolute deadlocks
+  score += (Math.random() - 0.5) * 0.1;
 
   if (mover) {
     const advance = mover.side === 'W'
@@ -310,7 +350,7 @@ export function conductVote5(board: Board5): VoteData5 | null {
 
   const mover = board.at(winner.origin[0], winner.origin[1]);
   const captured = board.at(winner.destination[0], winner.destination[1]);
-  const sideName = board.turn === 'W' ? 'White' : 'Black';
+  const sideName = board.turn === 'W' ? 'Cyan' : 'Magenta';
   const captureText = captured ? `, capturing ${captured.kind}` : '';
 
   const bulletin = `BREAKING NEWS — ${sideName} Parliament elects ${mover?.kind} ${winner.notation}${captureText} with ${totals[winner.notation]} of ${voters.length} first-preference votes. Supported by: ${supporters.join(', ')}`;

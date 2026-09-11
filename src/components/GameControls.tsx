@@ -13,9 +13,9 @@ interface GameControlsProps {
   isGameOver: boolean;
   whiteGov: GovernmentType;
   blackGov: GovernmentType;
-  onWhiteGovChange: (gov: GovernmentType) => void;
-  onBlackGovChange: (gov: GovernmentType) => void;
-  activeTurn: 'White' | 'Black';
+  onCyanGovChange: (gov: GovernmentType) => void;
+  onMagentaGovChange: (gov: GovernmentType) => void;
+  activeTurn: 'Cyan' | 'Magenta';
 }
 
 const GOVERNMENTS: { id: GovernmentType; label: string; desc: string }[] = [
@@ -38,8 +38,8 @@ export const GameControls: React.FC<GameControlsProps> = ({
   isGameOver,
   whiteGov,
   blackGov,
-  onWhiteGovChange,
-  onBlackGovChange,
+  onCyanGovChange,
+  onMagentaGovChange,
   activeTurn
 }) => {
   return (
@@ -150,15 +150,15 @@ export const GameControls: React.FC<GameControlsProps> = ({
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {/* White Government */}
+            {/* Cyan Government */}
             <div className="bg-neutral-900/80 p-2.5 rounded-lg border border-neutral-700/60">
               <label className="block text-xs font-medium text-neutral-300 mb-1">
-                White Constitution:
+                Cyan Constitution:
               </label>
               <select
                 id="select-white-gov"
                 value={whiteGov}
-                onChange={e => onWhiteGovChange(e.target.value as GovernmentType)}
+                onChange={e => onCyanGovChange(e.target.value as GovernmentType)}
                 className="w-full bg-neutral-800 text-amber-300 border border-neutral-600 rounded px-2.5 py-1.5 text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-amber-500"
               >
                 {GOVERNMENTS.map(g => (
@@ -172,15 +172,15 @@ export const GameControls: React.FC<GameControlsProps> = ({
               </p>
             </div>
 
-            {/* Black Government */}
+            {/* Magenta Government */}
             <div className="bg-neutral-900/80 p-2.5 rounded-lg border border-neutral-700/60">
               <label className="block text-xs font-medium text-neutral-300 mb-1">
-                Black Constitution:
+                Magenta Constitution:
               </label>
               <select
                 id="select-black-gov"
                 value={blackGov}
-                onChange={e => onBlackGovChange(e.target.value as GovernmentType)}
+                onChange={e => onMagentaGovChange(e.target.value as GovernmentType)}
                 className="w-full bg-neutral-800 text-amber-300 border border-neutral-600 rounded px-2.5 py-1.5 text-xs font-semibold focus:outline-none focus:ring-1 focus:ring-amber-500"
               >
                 {GOVERNMENTS.map(g => (

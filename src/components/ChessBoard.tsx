@@ -103,8 +103,8 @@ export const ChessBoard: React.FC<ChessBoardProps> = ({
                       <span
                         className={`text-3xl sm:text-4xl leading-none drop-shadow-sm transition-transform active:scale-95 ${
                           cell.side === 'W'
-                            ? 'text-neutral-900 drop-shadow-[0_1px_1px_rgba(255,255,255,0.8)] font-bold'
-                            : 'text-neutral-950 font-bold drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]'
+                            ? 'text-cyan-400 drop-shadow-[0_1px_1px_rgba(0,255,255,0.6)] font-bold'
+                            : 'text-fuchsia-500 font-bold drop-shadow-[0_1px_2px_rgba(255,0,255,0.6)]'
                         }`}
                       >
                         {symbol}
@@ -195,8 +195,8 @@ export const ChessBoard: React.FC<ChessBoardProps> = ({
                       <span
                         className={`text-2xl sm:text-3xl leading-none drop-shadow-sm transition-transform active:scale-95 ${
                           cell.color === 'w'
-                            ? 'text-neutral-900 drop-shadow-[0_1px_1px_rgba(255,255,255,0.7)] font-bold'
-                            : 'text-neutral-950 font-bold drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]'
+                            ? 'text-cyan-400 drop-shadow-[0_1px_1px_rgba(0,255,255,0.6)] font-bold'
+                            : 'text-fuchsia-500 font-bold drop-shadow-[0_1px_2px_rgba(255,0,255,0.6)]'
                         }`}
                       >
                         {symbol}
