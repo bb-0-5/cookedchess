@@ -1,0 +1,6 @@
+Latest Consensus Chess learning run
+
+Summary: learning-smoke-summary.json
+Progress for Excel: learning-smoke-progress.csv
+Cross-play games: learning-smoke-crossplay.json
+Saved models: learning-smoke-models.json

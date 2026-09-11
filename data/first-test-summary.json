@@ -1,0 +1,117 @@
+{
+  "summary": {
+    "method": {
+      "meaning_of_right": "A voter is closer to right when its favourite has lower regret against the best estimated proposal in short stochastic parliamentary rollouts.",
+      "horizon_plies": 4,
+      "rollouts_per_candidate": 2,
+      "important_limit": "This is a short-horizon material estimate in a simplified 5x5 game, not an ultimate measure of chess truth or a learning system."
+    },
+    "games": 3,
+    "white_wins": 0,
+    "black_wins": 3,
+    "draws_or_move_limits": 0,
+    "decisions": 58,
+    "average_plies": 19.33,
+    "government": {
+      "average_selected_regret": 35.8276,
+      "selected_best_estimate_rate": 0.2241
+    },
+    "voter_roles": {
+      "B:B": {
+        "votes": 14,
+        "average_regret": 50.6071,
+        "best_estimate_rate": 0.1429
+      },
+      "B:K": {
+        "votes": 29,
+        "average_regret": 44.5517,
+        "best_estimate_rate": 0.1724
+      },
+      "B:N": {
+        "votes": 3,
+        "average_regret": 5.1667,
+        "best_estimate_rate": 0.3333
+      },
+      "B:P": {
+        "votes": 90,
+        "average_regret": 35.1833,
+        "best_estimate_rate": 0.2333
+      },
+      "B:Q": {
+        "votes": 11,
+        "average_regret": 23.2727,
+        "best_estimate_rate": 0.1818
+      },
+      "B:R": {
+        "votes": 29,
+        "average_regret": 28.3793,
+        "best_estimate_rate": 0.2069
+      },
+      "W:B": {
+        "votes": 12,
+        "average_regret": 28.75,
+        "best_estimate_rate": 0.1667
+      },
+      "W:K": {
+        "votes": 29,
+        "average_regret": 44.6207,
+        "best_estimate_rate": 0.069
+      },
+      "W:N": {
+        "votes": 4,
+        "average_regret": 20.875,
+        "best_estimate_rate": 0.25
+      },
+      "W:P": {
+        "votes": 101,
+        "average_regret": 33.3465,
+        "best_estimate_rate": 0.2376
+      },
+      "W:Q": {
+        "votes": 15,
+        "average_regret": 28.9667,
+        "best_estimate_rate": 0.2
+      },
+      "W:R": {
+        "votes": 21,
+        "average_regret": 34.9524,
+        "best_estimate_rate": 0.1905
+      }
+    }
+  },
+  "games": [
+    {
+      "game": 1,
+      "seed": 42,
+      "start_state": "r.bqk/ppppp/n.N../PPPPP/R.BQK W",
+      "plies": 14,
+      "result": "Black",
+      "ending_material": {
+        "white": -101,
+        "black": 101
+      }
+    },
+    {
+      "game": 2,
+      "seed": 43,
+      "start_state": "rnbqk/p.ppp/Pp.../.PPPP/RNBQK W",
+      "plies": 26,
+      "result": "Black",
+      "ending_material": {
+        "white": -104,
+        "black": 104
+      }
+    },
+    {
+      "game": 3,
+      "seed": 44,
+      "start_state": "r.bqk/ppppp/n..P./PPP.P/RNBQK W",
+      "plies": 18,
+      "result": "Black",
+      "ending_material": {
+        "white": -117,
+        "black": 117
+      }
+    }
+  ]
+}

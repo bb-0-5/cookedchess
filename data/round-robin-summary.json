@@ -1,0 +1,47 @@
+{
+  "games": 25,
+  "average_plies": 61.68,
+  "governments": {
+    "democracy": {
+      "games": 10,
+      "wins": 0,
+      "losses": 0,
+      "draws": 10,
+      "win_rate": 0.0,
+      "average_relative_regret": 0.1755
+    },
+    "dictatorship": {
+      "games": 10,
+      "wins": 0,
+      "losses": 0,
+      "draws": 10,
+      "win_rate": 0.0,
+      "average_relative_regret": 0.1587
+    },
+    "monarchy": {
+      "games": 10,
+      "wins": 0,
+      "losses": 0,
+      "draws": 10,
+      "win_rate": 0.0,
+      "average_relative_regret": 0.1749
+    },
+    "reputation": {
+      "games": 10,
+      "wins": 0,
+      "losses": 0,
+      "draws": 10,
+      "win_rate": 0.0,
+      "average_relative_regret": 0.1562
+    },
+    "utilitarian": {
+      "games": 10,
+      "wins": 0,
+      "losses": 0,
+      "draws": 10,
+      "win_rate": 0.0,
+      "average_relative_regret": 0.3119
+    }
+  },
+  "interpretation": "Win rate measures chess outcomes. Average relative regret measures how often a government's voters preferred a move below the one-ply neutral benchmark. These are separate objectives, not one automatic definition of optimal."
+}

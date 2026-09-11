@@ -1,0 +1,20 @@
+[
+  {
+    "white_government": "democracy",
+    "black_government": "dictatorship",
+    "seed": 42,
+    "opening_fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+    "plies": 12,
+    "result": "Draw",
+    "termination": "THREEFOLD_REPETITION"
+  },
+  {
+    "white_government": "democracy",
+    "black_government": "dictatorship",
+    "seed": 43,
+    "opening_fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+    "plies": 12,
+    "result": "Draw",
+    "termination": "THREEFOLD_REPETITION"
+  }
+]

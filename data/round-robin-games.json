@@ -1,0 +1,227 @@
+[
+  {
+    "white_government": "democracy",
+    "black_government": "democracy",
+    "seed": 42,
+    "opening_fen": "rnbqkb1r/pppppppp/7n/8/8/N7/PPPPPPPP/R1BQKBNR w KQkq - 2 2",
+    "plies": 80,
+    "result": "Draw",
+    "termination": "THREEFOLD_REPETITION"
+  },
+  {
+    "white_government": "democracy",
+    "black_government": "monarchy",
+    "seed": 42,
+    "opening_fen": "rnbqkb1r/pppppppp/7n/8/8/N7/PPPPPPPP/R1BQKBNR w KQkq - 2 2",
+    "plies": 37,
+    "result": "Draw",
+    "termination": "THREEFOLD_REPETITION"
+  },
+  {
+    "white_government": "democracy",
+    "black_government": "dictatorship",
+    "seed": 42,
+    "opening_fen": "rnbqkb1r/pppppppp/7n/8/8/N7/PPPPPPPP/R1BQKBNR w KQkq - 2 2",
+    "plies": 37,
+    "result": "Draw",
+    "termination": "THREEFOLD_REPETITION"
+  },
+  {
+    "white_government": "democracy",
+    "black_government": "utilitarian",
+    "seed": 42,
+    "opening_fen": "rnbqkb1r/pppppppp/7n/8/8/N7/PPPPPPPP/R1BQKBNR w KQkq - 2 2",
+    "plies": 95,
+    "result": "Draw",
+    "termination": "THREEFOLD_REPETITION"
+  },
+  {
+    "white_government": "democracy",
+    "black_government": "reputation",
+    "seed": 42,
+    "opening_fen": "rnbqkb1r/pppppppp/7n/8/8/N7/PPPPPPPP/R1BQKBNR w KQkq - 2 2",
+    "plies": 82,
+    "result": "Draw",
+    "termination": "THREEFOLD_REPETITION"
+  },
+  {
+    "white_government": "monarchy",
+    "black_government": "democracy",
+    "seed": 42,
+    "opening_fen": "rnbqkb1r/pppppppp/7n/8/8/N7/PPPPPPPP/R1BQKBNR w KQkq - 2 2",
+    "plies": 70,
+    "result": "Draw",
+    "termination": "THREEFOLD_REPETITION"
+  },
+  {
+    "white_government": "monarchy",
+    "black_government": "monarchy",
+    "seed": 42,
+    "opening_fen": "rnbqkb1r/pppppppp/7n/8/8/N7/PPPPPPPP/R1BQKBNR w KQkq - 2 2",
+    "plies": 43,
+    "result": "Draw",
+    "termination": "THREEFOLD_REPETITION"
+  },
+  {
+    "white_government": "monarchy",
+    "black_government": "dictatorship",
+    "seed": 42,
+    "opening_fen": "rnbqkb1r/pppppppp/7n/8/8/N7/PPPPPPPP/R1BQKBNR w KQkq - 2 2",
+    "plies": 43,
+    "result": "Draw",
+    "termination": "THREEFOLD_REPETITION"
+  },
+  {
+    "white_government": "monarchy",
+    "black_government": "utilitarian",
+    "seed": 42,
+    "opening_fen": "rnbqkb1r/pppppppp/7n/8/8/N7/PPPPPPPP/R1BQKBNR w KQkq - 2 2",
+    "plies": 67,
+    "result": "Draw",
+    "termination": "THREEFOLD_REPETITION"
+  },
+  {
+    "white_government": "monarchy",
+    "black_government": "reputation",
+    "seed": 42,
+    "opening_fen": "rnbqkb1r/pppppppp/7n/8/8/N7/PPPPPPPP/R1BQKBNR w KQkq - 2 2",
+    "plies": 54,
+    "result": "Draw",
+    "termination": "THREEFOLD_REPETITION"
+  },
+  {
+    "white_government": "dictatorship",
+    "black_government": "democracy",
+    "seed": 42,
+    "opening_fen": "rnbqkb1r/pppppppp/7n/8/8/N7/PPPPPPPP/R1BQKBNR w KQkq - 2 2",
+    "plies": 70,
+    "result": "Draw",
+    "termination": "THREEFOLD_REPETITION"
+  },
+  {
+    "white_government": "dictatorship",
+    "black_government": "monarchy",
+    "seed": 42,
+    "opening_fen": "rnbqkb1r/pppppppp/7n/8/8/N7/PPPPPPPP/R1BQKBNR w KQkq - 2 2",
+    "plies": 43,
+    "result": "Draw",
+    "termination": "THREEFOLD_REPETITION"
+  },
+  {
+    "white_government": "dictatorship",
+    "black_government": "dictatorship",
+    "seed": 42,
+    "opening_fen": "rnbqkb1r/pppppppp/7n/8/8/N7/PPPPPPPP/R1BQKBNR w KQkq - 2 2",
+    "plies": 43,
+    "result": "Draw",
+    "termination": "THREEFOLD_REPETITION"
+  },
+  {
+    "white_government": "dictatorship",
+    "black_government": "utilitarian",
+    "seed": 42,
+    "opening_fen": "rnbqkb1r/pppppppp/7n/8/8/N7/PPPPPPPP/R1BQKBNR w KQkq - 2 2",
+    "plies": 41,
+    "result": "Draw",
+    "termination": "THREEFOLD_REPETITION"
+  },
+  {
+    "white_government": "dictatorship",
+    "black_government": "reputation",
+    "seed": 42,
+    "opening_fen": "rnbqkb1r/pppppppp/7n/8/8/N7/PPPPPPPP/R1BQKBNR w KQkq - 2 2",
+    "plies": 54,
+    "result": "Draw",
+    "termination": "THREEFOLD_REPETITION"
+  },
+  {
+    "white_government": "utilitarian",
+    "black_government": "democracy",
+    "seed": 42,
+    "opening_fen": "rnbqkb1r/pppppppp/7n/8/8/N7/PPPPPPPP/R1BQKBNR w KQkq - 2 2",
+    "plies": 72,
+    "result": "Draw",
+    "termination": "INSUFFICIENT_MATERIAL"
+  },
+  {
+    "white_government": "utilitarian",
+    "black_government": "monarchy",
+    "seed": 42,
+    "opening_fen": "rnbqkb1r/pppppppp/7n/8/8/N7/PPPPPPPP/R1BQKBNR w KQkq - 2 2",
+    "plies": 66,
+    "result": "Draw",
+    "termination": "THREEFOLD_REPETITION"
+  },
+  {
+    "white_government": "utilitarian",
+    "black_government": "dictatorship",
+    "seed": 42,
+    "opening_fen": "rnbqkb1r/pppppppp/7n/8/8/N7/PPPPPPPP/R1BQKBNR w KQkq - 2 2",
+    "plies": 78,
+    "result": "Draw",
+    "termination": "THREEFOLD_REPETITION"
+  },
+  {
+    "white_government": "utilitarian",
+    "black_government": "utilitarian",
+    "seed": 42,
+    "opening_fen": "rnbqkb1r/pppppppp/7n/8/8/N7/PPPPPPPP/R1BQKBNR w KQkq - 2 2",
+    "plies": 75,
+    "result": "Draw",
+    "termination": "THREEFOLD_REPETITION"
+  },
+  {
+    "white_government": "utilitarian",
+    "black_government": "reputation",
+    "seed": 42,
+    "opening_fen": "rnbqkb1r/pppppppp/7n/8/8/N7/PPPPPPPP/R1BQKBNR w KQkq - 2 2",
+    "plies": 83,
+    "result": "Draw",
+    "termination": "THREEFOLD_REPETITION"
+  },
+  {
+    "white_government": "reputation",
+    "black_government": "democracy",
+    "seed": 42,
+    "opening_fen": "rnbqkb1r/pppppppp/7n/8/8/N7/PPPPPPPP/R1BQKBNR w KQkq - 2 2",
+    "plies": 80,
+    "result": "Draw",
+    "termination": "THREEFOLD_REPETITION"
+  },
+  {
+    "white_government": "reputation",
+    "black_government": "monarchy",
+    "seed": 42,
+    "opening_fen": "rnbqkb1r/pppppppp/7n/8/8/N7/PPPPPPPP/R1BQKBNR w KQkq - 2 2",
+    "plies": 37,
+    "result": "Draw",
+    "termination": "THREEFOLD_REPETITION"
+  },
+  {
+    "white_government": "reputation",
+    "black_government": "dictatorship",
+    "seed": 42,
+    "opening_fen": "rnbqkb1r/pppppppp/7n/8/8/N7/PPPPPPPP/R1BQKBNR w KQkq - 2 2",
+    "plies": 37,
+    "result": "Draw",
+    "termination": "THREEFOLD_REPETITION"
+  },
+  {
+    "white_government": "reputation",
+    "black_government": "utilitarian",
+    "seed": 42,
+    "opening_fen": "rnbqkb1r/pppppppp/7n/8/8/N7/PPPPPPPP/R1BQKBNR w KQkq - 2 2",
+    "plies": 73,
+    "result": "Draw",
+    "termination": "THREEFOLD_REPETITION"
+  },
+  {
+    "white_government": "reputation",
+    "black_government": "reputation",
+    "seed": 42,
+    "opening_fen": "rnbqkb1r/pppppppp/7n/8/8/N7/PPPPPPPP/R1BQKBNR w KQkq - 2 2",
+    "plies": 82,
+    "result": "Draw",
+    "termination": "THREEFOLD_REPETITION"
+  }
+]
