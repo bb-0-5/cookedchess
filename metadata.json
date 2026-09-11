@@ -1,0 +1,8 @@
+{
+  "name": "Consensus Chess",
+  "description": "A political chess game and governance simulation where every piece is a parliamentarian voting on legal moves according to democratic, monarchic, dictatorial, utilitarian, or reputation-based constitutions.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
